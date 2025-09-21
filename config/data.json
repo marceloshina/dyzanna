@@ -1,0 +1,8 @@
+{
+    "preview": {
+        "compiled_assets": [
+            "css/style-colors.scss.tpl",
+            "css/style-tokens.tpl"
+        ]
+    }
+}
