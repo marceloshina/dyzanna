@@ -399,6 +399,31 @@ section.js-section-video {
   transform: scale(1.05);
 }
 
+.product-image-gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.js-swiper-thumbs-pdp .swiper-wrapper {
+  flex-direction: column;
+}
+
+.js-swiper-thumbs-pdp .swiper-slide {
+  cursor: pointer;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.js-swiper-thumbs-pdp .swiper-slide-thumb-active img {
+  border: 2px solid #000;
+  opacity: 1;
+}
+
+.js-swiper-thumbs-pdp .swiper-slide img {
+  transition: opacity 0.3s ease;
+}
+
 
 /* PRODUTOS */
 

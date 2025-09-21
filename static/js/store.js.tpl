@@ -2719,53 +2719,38 @@ DOMContentLoaded.addEventOrExecute(() => {
                 var slidesPerViewVal = 1.15;
             }
 
-            var productSwiper = null;
-            createSwiper(
-                '.js-swiper-product', {
-                    lazy: true,
-                    speed: speedVal,
-                    slidesPerView: slidesPerViewVal,
-                    watchOverflow: true,
-                    pagination: {
-                        el: '.js-swiper-product-pagination',
-                        type: 'fraction',
-                    },
-                    navigation: {
-                        nextEl: '.js-swiper-product-next',
-                        prevEl: '.js-swiper-product-prev',
-                    },
-                    breakpoints: {
-                        768: {
-                            spaceBetween: spaceBetweenVal,
-                        }
-                    },
-                    {% if product.video_url and template == 'product' %}
-                        on: {
-                            init: function () {
-                                
-                                if (window.innerWidth < 768) {
-                                    productSwiperHeight = jQueryNuvem(".js-swiper-product").height();
-                                    jQueryNuvem(".js-product-video-slide").height(productSwiperHeight);
-                                }
-                            },
-                            slideChangeTransitionEnd: function () {
-                                const $parent = jQueryNuvem(this.el).closest(".js-product-detail");
-                                const $labelsFloatingGroup = $parent.find(".js-labels-floating-group");
-                                if(jQueryNuvem(".js-product-video-slide").hasClass("swiper-slide-active")){
-                                    $labelsFloatingGroup.fadeOut(100);
-                                }else{
-                                    $labelsFloatingGroup.fadeIn(100);
-                                }
-                                jQueryNuvem('.js-video').show();
-                                jQueryNuvem('.js-video-iframe').hide().find("iframe").remove();
-                            },
-                        },
-                    {% endif %}
-                },
-                function(swiperInstance) {
-                    productSwiper = swiperInstance;
-                }
-            );
+            var thumbsSwiper = new Swiper('.js-swiper-thumbs-pdp', {
+  direction: 'vertical',
+  spaceBetween: 10,
+  slidesPerView: 'auto',
+  watchSlidesProgress: true,
+  slideToClickedSlide: true
+});
+
+var productSwiper = new Swiper('.js-swiper-product-pdp', {
+  lazy: true,
+  speed: 300,
+  slidesPerView: 1,
+  watchOverflow: true,
+  pagination: {
+    el: '.js-swiper-product-pagination',
+    type: 'fraction',
+  },
+  navigation: {
+    nextEl: '.js-swiper-product-next',
+    prevEl: '.js-swiper-product-prev',
+  },
+  thumbs: {
+    swiper: thumbsSwiper
+  }
+});
+
+jQueryNuvem('.js-swiper-thumbs-pdp .swiper-slide').each(function(index) {
+  jQueryNuvem(this).on('click', function () {
+    productSwiper.slideTo(index);
+  });
+});
+
 
             {% if template == 'product' %}
                 {{ block ('product_fancybox') }}
